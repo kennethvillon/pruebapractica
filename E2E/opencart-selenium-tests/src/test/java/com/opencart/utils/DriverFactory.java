@@ -13,6 +13,8 @@ public class DriverFactory {
         if (driver.get() == null) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
+            options.setAcceptInsecureCerts(true);
+            options.addArguments("--ignore-certificate-errors");
             options.addArguments("--start-maximized");
             options.addArguments("--remote-allow-origins=*");
             driver.set(new ChromeDriver(options));

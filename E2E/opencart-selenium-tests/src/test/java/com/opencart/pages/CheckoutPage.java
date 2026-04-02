@@ -42,22 +42,20 @@ public class CheckoutPage extends BasePage {
     }
 
     public void seleccionarGuestCheckout() {
-        // Esperar que la sección de cuenta sea visible
-        waitForElement(By.id("account"));
+        // ✅ Espera el radio directamente, elimina el waitForElement(By.id("account"))
+        waitForElement(By.cssSelector("input[value='guest']"));
 
-        // Scroll al radio para asegurar que esté en viewport
         org.openqa.selenium.WebElement radio =
                 driver.findElement(By.cssSelector("input[value='guest']"));
+
         ((org.openqa.selenium.JavascriptExecutor) driver)
                 .executeScript("arguments[0].scrollIntoView(true);", radio);
 
-        // Usar JavaScript click por si el elemento está cubierto
         ((org.openqa.selenium.JavascriptExecutor) driver)
                 .executeScript("arguments[0].click();", radio);
 
         click(botonContinuar1);
 
-        // Esperar que el formulario de billing aparezca
         waitForElement(By.id("input-payment-firstname"));
     }
 
@@ -70,38 +68,81 @@ public class CheckoutPage extends BasePage {
         type(inputCiudad,       datos.get("ciudad"));
         type(inputCodigoPostal, datos.get("codigopost"));
 
-        // Seleccionar país y esperar que el dropdown de región se pueble
+        // Seleccionar país — dispara AJAX que recarga el dropdown de región
         selectByVisibleText(selectPais, datos.get("pais"));
 
-        // Esperar explícitamente que la región tenga más de 1 opción (la opción vacía)
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
-                By.cssSelector("#input-payment-zone option"), 1));
+        // ✅ Re-encuentra el dropdown en CADA intento para evitar StaleElementReference
+        wait.until(d -> {
+            try {
+                org.openqa.selenium.support.ui.Select s =
+                        new org.openqa.selenium.support.ui.Select(
+                                d.findElement(By.id("input-payment-zone")));  // ← re-find cada vez
+
+                return s.getOptions().stream()
+                        .anyMatch(opt -> opt.getText().trim().equals(datos.get("region")));
+
+            } catch (org.openqa.selenium.StaleElementReferenceException e) {
+                return false;  // ← dropdown aún se está recargando, reintentar
+            }
+        });
 
         selectByVisibleText(selectRegion, datos.get("region"));
-
         click(botonContinuar2);
     }
 
     public void seleccionarMetodoEnvio() {
-        // Esperar que el panel de shipping method sea visible
-        waitForElement(By.id("button-shipping-method"));
-        click(botonContinuar3);
+        // ✅ Esperar que el panel de shipping esté visible y habilitado
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("button-shipping-method")));
+
+        // ✅ Scroll + JS click para evitar que esté tapado por otro elemento
+        org.openqa.selenium.WebElement btn =
+                driver.findElement(By.id("button-shipping-method"));
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView(true);", btn);
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", btn);
     }
 
     public void aceptarTerminosYCondiciones() {
-        // Esperar que el panel de payment method sea visible
-        waitForElement(checkTerminos);
-        click(checkTerminos);
-        click(botonContinuar4);
+        // ✅ Esperar que el panel de payment method sea visible
+        wait.until(ExpectedConditions.elementToBeClickable(By.name("agree")));
+
+        org.openqa.selenium.WebElement chk = driver.findElement(By.name("agree"));
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", chk);
+
+        // ✅ Esperar que el botón de continuar esté habilitado
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("button-payment-method")));
+
+        org.openqa.selenium.WebElement btn =
+                driver.findElement(By.id("button-payment-method"));
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", btn);
     }
 
     public void confirmarOrden() {
-        // Esperar que el botón de confirmar sea clickeable
-        waitForElement(botonConfirmar);
-        click(botonConfirmar);
+        // ✅ Esperar que el botón confirm sea visible Y clickeable
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.id("button-confirm")));
+
+        org.openqa.selenium.WebElement btn =
+                driver.findElement(By.id("button-confirm"));
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView(true);", btn);
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", btn);
     }
 
     public String obtenerMensajeConfirmacion() {
+        // ✅ Esperar que la URL cambie (indica que la orden fue procesada)
+        wait.until(ExpectedConditions.urlContains("route=checkout/success"));
+
+        // ✅ Luego esperar el h1 con el mensaje
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("#content h1")));
+
         return getText(mensajeExito);
     }
 }

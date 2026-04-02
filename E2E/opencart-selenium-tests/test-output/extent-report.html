@@ -39,7 +39,6 @@
 		<!-- slideout menu -->
 		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
 			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
-			<li class='waves-effect'><a href='#!' view='exception-view' onclick="configureView(2)"><i class='material-icons'>bug_report</i></a></li>
 			<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></a></li>
 		</ul>
 		<!-- report name -->
@@ -49,7 +48,7 @@
 		<!-- nav-right -->
 		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
 			<a href='#!'>
-			<span class='label blue darken-3 suite-start-time'>abr 1, 2026 08:31:00 p. m.</span>
+			<span class='label blue darken-3 suite-start-time'>abr 2, 2026 03:05:15 p. m.</span>
 			</a>
 		</ul>
 	</div>
@@ -64,7 +63,7 @@
 				<i class='material-icons'>warning</i> Status
 				</a>
 				<ul id='tests-toggle' class='dropdown-content'>
-										<li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
+										<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
 					<li class='divider'></li>
 					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
 				</ul>
@@ -108,12 +107,12 @@
                     <canvas id='parent-analysis' width='90' height='70'></canvas>
                 </div>
                 <div class='block text-small'>
-                    <span class='tooltipped' data-position='top' data-tooltip='$0%'>
-                    <span class='strong'>0</span> features passed</span>
+                    <span class='tooltipped' data-position='top' data-tooltip='$100%'>
+                    <span class='strong'>1</span> features passed</span>
                 </div>
                 <div class='block text-small'>
-                    <span class='strong tooltipped' data-position='top' data-tooltip='100%'>
-                    1</span> features failed, 
+                    <span class='strong tooltipped' data-position='top' data-tooltip='0%'>
+                    0</span> features failed, 
                     <span class='strong tooltipped' data-position='top' data-tooltip='0%'>
                     0</span> skipped
                 </div>
@@ -126,12 +125,12 @@
                     <canvas id='child-analysis' width='90' height='70'></canvas>
                 </div>
                 <div class='block text-small'>
-                    <span class='tooltipped' data-position='top' data-tooltip='0%'>
-                    <span class='strong'>0</span> scenarios passed</span>
+                    <span class='tooltipped' data-position='top' data-tooltip='100%'>
+                    <span class='strong'>1</span> scenarios passed</span>
                 </div>
                 <div class='block text-small'>
-                    <span class='strong tooltipped' data-position='top' data-tooltip='100%'>
-                    1</span> scenarios failed, 
+                    <span class='strong tooltipped' data-position='top' data-tooltip='0%'>
+                    0</span> scenarios failed, 
                     <span class='strong tooltipped' data-position='top' data-tooltip='0%'>
                     0</span> skipped, 
                     <span class='strong tooltipped' data-position='top' data-tooltip='0%'>
@@ -146,14 +145,14 @@
                     <canvas id='grandchild-analysis' width='90' height='70'></canvas>
                 </div>
                 <div class='block text-small'>
-                    <span class='tooltipped' data-position='top' data-tooltip='60%'>
-                    <span class='strong'>9</span> steps passed</span>
+                    <span class='tooltipped' data-position='top' data-tooltip='100%'>
+                    <span class='strong'>14</span> steps passed</span>
                 </div>
                 <div class='block text-small'>
-                    <span class='strong tooltipped' data-position='top' data-tooltip='6%'>
-                    1</span> steps failed, 
-                    <span class='strong tooltipped' data-position='top' data-tooltip='33%'>
-                    5</span> skipped, 
+                    <span class='strong tooltipped' data-position='top' data-tooltip='0%'>
+                    0</span> steps failed, 
+                    <span class='strong tooltipped' data-position='top' data-tooltip='0%'>
+                    0</span> skipped, 
                     <span class='strong tooltipped' data-position='top' data-tooltip='0%'>
                     0</span> others
                 </div>
@@ -174,11 +173,11 @@
 	<div class='subview-left left'>
 		<div class='view-summary'>
 			<ul id='test-collection' class='test-collection'>
-				<li class='test displayed active has-leaf fail' status='fail' bdd='true' test-id='1'>
+				<li class='test displayed active has-leaf pass' status='pass' bdd='true' test-id='1'>
 					<div class='test-heading'>
 						<span class='test-name'>Compra en OpenCart</span>
-						<span class='test-time'>abr 1, 2026 08:31:01 p. m.</span>
-						<span class='test-status right fail'>Fail</span>
+						<span class='test-time'>abr 2, 2026 03:05:16 p. m.</span>
+						<span class='test-status right pass'>Pass</span>
 					</div>
 					<div class='test-content hide'>
 <div class="sr-filters bdd-filters">
@@ -191,11 +190,11 @@
   Quiero agregar productos al carrito y completar el checkout
   Para confirmar mi pedido exitosamente</div>
 
-<div class='scenario node' test-id='2' status='fail'>
+<div class='scenario node' test-id='2' status='pass'>
 
-	<span class='duration right label'>00 01 04.223</span>
+	<span class='duration right label'>00 00 15.383</span>
 	<div class="bdd-test">
-		<div class="scenario-name"><span class='status fail' title='Fail'><i class='material-icons'>cancel</i></span> Scenario: Agregar dos productos al carrito y completar checkout como invitado</div>
+		<div class="scenario-name"><span class='status pass' title='Pass'><i class='material-icons'>check_circle</i></span> Scenario: Agregar dos productos al carrito y completar checkout como invitado</div>
 	</div>
 	
 	
@@ -241,63 +240,36 @@
 
 
 		</li>
-		<li test-id='12' class='node and Fail' status='Fail'>
-			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.selecciona(java.lang.String))"><span class='status fail' title='Fail'><i class='material-icons'>cancel</i></span>And selecciona "Guest Checkout"</div>
+		<li test-id='12' class='node and Pass' status='Pass'>
+			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.selecciona(java.lang.String))"><span class='status pass' title='Pass'><i class='material-icons'>check_circle</i></span>And selecciona "Guest Checkout"</div>
 
 
-					<textarea disabled class="code-block">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.id: account (tried for 15 second(s) with 500 milliseconds interval)
-Build info: version: '4.18.1', revision: 'b1d3319b48'
-System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.10'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 146.0.7680.165, chrome: {chromedriverVersion: 146.0.7680.165 (4b989da09e1..., userDataDir: C:\Users\kenne\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50533}, goog:processID: 1128, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50533/devtoo..., se:cdpVersion: 146.0.7680.165, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 14fca0e2635a3798a4ab7589c24e9bdf
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:228)
-	at com.opencart.pages.BasePage.waitForElement(BasePage.java:22)
-	at com.opencart.pages.CheckoutPage.seleccionarGuestCheckout(CheckoutPage.java:46)
-	at com.opencart.steps.OpenCartSteps.selecciona(OpenCartSteps.java:92)
-	at ✽.selecciona "Guest Checkout"(file:///C:/Users/kenne/IdeaProjects/opencart-selenium-tests/src/test/resources/features/opencart.feature:18)
-</textarea>
 		</li>
-		<li test-id='13' class='node and Skip' status='Skip'>
-			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.completa_los_datos_de_envío_con(io.cucumber.datatable.DataTable))"><span class='status skip' title='Skip'><i class='material-icons'>redo</i></span>And completa los datos de envío con:</div>
+		<li test-id='13' class='node and Pass' status='Pass'>
+			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.completa_los_datos_de_envío_con(io.cucumber.datatable.DataTable))"><span class='status pass' title='Pass'><i class='material-icons'>check_circle</i></span>And completa los datos de envío con:</div>
 
 
 					<div class="node-step"><table class='markup-table table '><tr><td>campo</td><td>valor</td></tr><tr><td>nombre</td><td>Juan</td></tr><tr><td>apellido</td><td>Perez</td></tr><tr><td>email</td><td>juan@test.com</td></tr><tr><td>telefono</td><td>0999999999</td></tr><tr><td>direccion</td><td>Av. Amazonas 123</td></tr><tr><td>ciudad</td><td>Quito</td></tr><tr><td>pais</td><td>Ecuador</td></tr><tr><td>region</td><td>Pichincha</td></tr><tr><td>codigopost</td><td>170150</td></tr></table></div>
-					<div class="node-step">Step skipped</div>
 		</li>
-		<li test-id='14' class='node and Skip' status='Skip'>
-			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.selecciona_método_de_envío())"><span class='status skip' title='Skip'><i class='material-icons'>redo</i></span>And selecciona método de envío</div>
+		<li test-id='14' class='node and Pass' status='Pass'>
+			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.selecciona_método_de_envío())"><span class='status pass' title='Pass'><i class='material-icons'>check_circle</i></span>And selecciona método de envío</div>
 
 
-					<div class="node-step">Step skipped</div>
 		</li>
-		<li test-id='15' class='node and Skip' status='Skip'>
-			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.acepta_los_términos_y_condiciones())"><span class='status skip' title='Skip'><i class='material-icons'>redo</i></span>And acepta los términos y condiciones</div>
+		<li test-id='15' class='node and Pass' status='Pass'>
+			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.acepta_los_términos_y_condiciones())"><span class='status pass' title='Pass'><i class='material-icons'>check_circle</i></span>And acepta los términos y condiciones</div>
 
 
-					<div class="node-step">Step skipped</div>
 		</li>
-		<li test-id='16' class='node and Skip' status='Skip'>
-			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.confirma_la_orden())"><span class='status skip' title='Skip'><i class='material-icons'>redo</i></span>And confirma la orden</div>
+		<li test-id='16' class='node and Pass' status='Pass'>
+			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.confirma_la_orden())"><span class='status pass' title='Pass'><i class='material-icons'>check_circle</i></span>And confirma la orden</div>
 
 
-					<div class="node-step">Step skipped</div>
 		</li>
-		<li test-id='17' class='node then Skip' status='Skip'>
-			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.debe_ver_el_mensaje(java.lang.String))"><span class='status skip' title='Skip'><i class='material-icons'>redo</i></span>Then debe ver el mensaje "Your order has been placed!"</div>
+		<li test-id='17' class='node then Pass' status='Pass'>
+			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.debe_ver_el_mensaje(java.lang.String))"><span class='status pass' title='Pass'><i class='material-icons'>check_circle</i></span>Then debe ver el mensaje "Your order has been placed!"</div>
 
 
-					<div class="node-step">Step skipped</div>
-		</li>
-		<li test-id='18' class='node * Pass' status='Pass'>
-			<div class="step-name" title="(AFTER)"><span class='status pass' title='Pass'><i class='material-icons'>check_circle</i></span>com.opencart.hooks.Hooks.tearDown(io.cucumber.java.Scenario)</div>
-
-
-					<div class="node-step">Screenshot del fallo</div>
-					<div class='screenshots'>
-						<img width='80' height='40' onerror='this.style.display="none"' data-featherlight='../screenshots/embedded1.png' src='../screenshots/embedded1.png'>
-					</div>
 		</li>
 	</ul>
 </div>
@@ -325,74 +297,7 @@ Session ID: 14fca0e2635a3798a4ab7589c24e9bdf
 	</div>
 	<!-- subview right -->
 </div>
-<!-- test view --><div id='exception-view' class='view hide'>
-	<section id='controls'>
-		<div class='controls grey lighten-4'>
-			<!-- search -->
-			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
-				<a href="#" class='search-div'>
-				<i class='material-icons'>search</i> Search
-				</a>
-				<div class='input-field left hide'>
-					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
-				</div>
-			</div>
-			<!-- search -->
-		</div>
-	</section>
-	<div class='subview-left left'>
-		<div class='view-summary'>
-			<ul id='exception-collection' class='exception-collection'>
-				<li class='exception displayed active'>
-					<div class='exception-heading'>
-						<span class='exception-name'>org.openqa.selenium.TimeoutException</span>
-						<span class='exception-count right'><span class='label red lighten-1 white-text'>1</span></span>
-					</div>
-					<div class='exception-content hide'>
-						<div class='exception-tests'>
-							<table class='bordered table-results'>
-								<thead>
-									<tr>
-										<th>Timestamp</th>
-										<th>TestName</th>
-										<th>StackTrace</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>abr 1, 2026 08:31:47 p. m.</td>
-										<td class='linked' test-id='12'>And selecciona "Guest Checkout"</td>
-										<td>
-											<textarea disabled class="code-block">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.id: account (tried for 15 second(s) with 500 milliseconds interval)
-Build info: version: '4.18.1', revision: 'b1d3319b48'
-System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.10'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 146.0.7680.165, chrome: {chromedriverVersion: 146.0.7680.165 (4b989da09e1..., userDataDir: C:\Users\kenne\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50533}, goog:processID: 1128, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50533/devtoo..., se:cdpVersion: 146.0.7680.165, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 14fca0e2635a3798a4ab7589c24e9bdf
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:228)
-	at com.opencart.pages.BasePage.waitForElement(BasePage.java:22)
-	at com.opencart.pages.CheckoutPage.seleccionarGuestCheckout(CheckoutPage.java:46)
-	at com.opencart.steps.OpenCartSteps.selecciona(OpenCartSteps.java:92)
-	at ✽.selecciona "Guest Checkout"(file:///C:/Users/kenne/IdeaProjects/opencart-selenium-tests/src/test/resources/features/opencart.feature:18)
-</textarea>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class='subview-right left'>
-		<div class='view-summary'>
-			<h5 class='exception-name'></h5>
-		</div>
-	</div>
-</div>
-<!-- exception view --><div id='dashboard-view' class='view hide'>
+<!-- test view --><div id='dashboard-view' class='view hide'>
 	<div class='card-panel transparent np-v'>
 		<h5>Dashboard</h5>
 
@@ -412,25 +317,25 @@ Session ID: 14fca0e2635a3798a4ab7589c24e9bdf
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Steps
-					<div class='panel-lead'>15</div>
+					<div class='panel-lead'>14</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Start
-					<div class='panel-lead'>abr 1, 2026 08:31:00 p. m.</div>
+					<div class='panel-lead'>abr 2, 2026 03:05:15 p. m.</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 			 		End
-			 		<div class='panel-lead'>abr 1, 2026 08:32:05 p. m.</div>
+			 		<div class='panel-lead'>abr 2, 2026 03:05:31 p. m.</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Time Taken
-					<div class='panel-lead'>00 01 04.981</div>
+					<div class='panel-lead'>00 00 15.929</div>
 				</div>
 			</div>
 		</div>
@@ -442,34 +347,34 @@ Session ID: 14fca0e2635a3798a4ab7589c24e9bdf
 		<script>
 			var statusGroup = {
                 parentCount: 1,
-				passParent: 0,
-				failParent: 1,
+				passParent: 1,
+				failParent: 0,
 				fatalParent: 0,
 				errorParent: 0,
 				warningParent: 0,
 				skipParent: 0,
 				childCount: 1,
-				passChild: 0,
-				failChild: 1,
+				passChild: 1,
+				failChild: 0,
 				fatalChild: 0,
 				errorChild: 0,
 				warningChild: 0,
 				skipChild: 0,
 				infoChild: 0,
-				grandChildCount: 15,
-				passGrandChild: 9,
-				failGrandChild: 1,
+				grandChildCount: 14,
+				passGrandChild: 14,
+				failGrandChild: 0,
 				fatalGrandChild: 0,
 				errorGrandChild: 0,
 				warningGrandChild: 0,
-				skipGrandChild: 5,
+				skipGrandChild: 0,
 				infoGrandChild: 0,
 			};
 			</script>
 		
 		<script>
 			var timeline = {
-			        "Compra en OpenCart":64.227
+			        "Compra en OpenCart":15.386
 			};
 		</script>
 		

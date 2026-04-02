@@ -5,21 +5,24 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigReader {
-
-    private static final Properties props = new Properties();
+    private static Properties properties;
 
     static {
         try {
-            FileInputStream fis = new FileInputStream(
-                    "src/test/resources/config.properties"
-            );
-            props.load(fis);
+            // Ruta al archivo de configuración
+            String path = "src/test/resources/config.properties";
+            FileInputStream input = new FileInputStream(path);
+            properties = new Properties();
+            properties.load(input);
+            input.close();
         } catch (IOException e) {
-            throw new RuntimeException("No se encontró config.properties", e);
+            e.printStackTrace();
+            throw new RuntimeException("No se pudo cargar el archivo config.properties");
         }
     }
 
-    public static String get(String key) {
-        return props.getProperty(key);
+    // Este es el método que te da error si no existe o no es static
+    public static String getProperty(String key) {
+        return properties.getProperty(key);
     }
 }

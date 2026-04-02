@@ -1,6 +1,7 @@
 package com.opencart.steps;
 
 import com.opencart.pages.*;
+import com.opencart.utils.ConfigReader;
 import com.opencart.utils.DriverFactory;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
@@ -22,11 +23,12 @@ public class OpenCartSteps {
     private final CartPage cartPage;
     private final CheckoutPage checkoutPage;
 
-    private static final String BASE_URL = "http://opencart.abstracta.us/";
-
     public OpenCartSteps() {
         this.driver       = DriverFactory.getDriver();
-        this.wait         = new WebDriverWait(driver, Duration.ofSeconds(15));
+        // Usamos el tiempo de espera definido en el config.properties
+        int timeout = Integer.parseInt(ConfigReader.getProperty("explicit.wait"));
+        this.wait         = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+
         this.homePage     = new HomePage(driver);
         this.productPage  = new ProductPage(driver);
         this.cartPage     = new CartPage(driver);
@@ -35,6 +37,8 @@ public class OpenCartSteps {
 
     @Given("el usuario está en la página principal de OpenCart")
     public void el_usuario_está_en_la_página_principal() {
+        // Navegación inicial usando el ConfigReader
+        driver.get(ConfigReader.getProperty("base.url"));
         wait.until(ExpectedConditions.titleContains("Your Store"));
         Assert.assertTrue(driver.getTitle().contains("Your Store"));
     }
@@ -49,29 +53,25 @@ public class OpenCartSteps {
         productPage.clickPrimerProducto();
         productPage.agregarAlCarrito();
 
-        // Esperar confirmación visual de que el producto fue agregado
+        // Esperar confirmación visual
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector(".alert-success")));
 
-        // Navegar al inicio de forma directa y determinista
-        driver.get(BASE_URL);
-        wait.until(ExpectedConditions.titleContains("Your Store"));
+        driver.get(ConfigReader.getProperty("base.url"));
     }
 
     @Then("el carrito debe mostrar {int} productos")
     public void el_carrito_debe_mostrar_productos(Integer cantidad) {
-        // Esperar que el contador del carrito refleje la cantidad correcta
         wait.until(ExpectedConditions.textToBePresentInElementLocated(
                 By.cssSelector("#cart-total"),
                 cantidad + " item"));
 
         String textoCarrito = driver
                 .findElement(By.cssSelector("#cart-total"))
-                .getText(); // Ej: "2 item(s) - $1,698.00"
+                .getText();
 
         Assert.assertTrue(
-                "Carrito muestra: '" + textoCarrito
-                        + "' pero se esperaban " + cantidad + " productos",
+                "Carrito muestra: '" + textoCarrito + "' pero se esperaban " + cantidad,
                 textoCarrito.startsWith(String.valueOf(cantidad))
         );
     }
@@ -118,8 +118,7 @@ public class OpenCartSteps {
     public void debe_ver_el_mensaje(String mensajeEsperado) {
         String mensajeReal = checkoutPage.obtenerMensajeConfirmacion();
         Assert.assertTrue(
-                "Se esperaba: '" + mensajeEsperado
-                        + "' pero se obtuvo: '" + mensajeReal + "'",
+                "Error en mensaje. Real: " + mensajeReal,
                 mensajeReal.contains(mensajeEsperado)
         );
     }
