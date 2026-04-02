@@ -49,7 +49,7 @@
 		<!-- nav-right -->
 		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
 			<a href='#!'>
-			<span class='label blue darken-3 suite-start-time'>abr 1, 2026 05:28:39 p. m.</span>
+			<span class='label blue darken-3 suite-start-time'>abr 1, 2026 08:31:00 p. m.</span>
 			</a>
 		</ul>
 	</div>
@@ -177,7 +177,7 @@
 				<li class='test displayed active has-leaf fail' status='fail' bdd='true' test-id='1'>
 					<div class='test-heading'>
 						<span class='test-name'>Compra en OpenCart</span>
-						<span class='test-time'>abr 1, 2026 05:28:41 p. m.</span>
+						<span class='test-time'>abr 1, 2026 08:31:01 p. m.</span>
 						<span class='test-status right fail'>Fail</span>
 					</div>
 					<div class='test-content hide'>
@@ -193,7 +193,7 @@
 
 <div class='scenario node' test-id='2' status='fail'>
 
-	<span class='duration right label'>00 01 19.409</span>
+	<span class='duration right label'>00 01 04.223</span>
 	<div class="bdd-test">
 		<div class="scenario-name"><span class='status fail' title='Fail'><i class='material-icons'>cancel</i></span> Scenario: Agregar dos productos al carrito y completar checkout como invitado</div>
 	</div>
@@ -245,17 +245,17 @@
 			<div class="step-name" title="(com.opencart.steps.OpenCartSteps.selecciona(java.lang.String))"><span class='status fail' title='Fail'><i class='material-icons'>cancel</i></span>And selecciona "Guest Checkout"</div>
 
 
-					<textarea disabled class="code-block">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for element to be clickable: By.id: input-account-guest (tried for 15 second(s) with 500 milliseconds interval)
+					<textarea disabled class="code-block">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.id: account (tried for 15 second(s) with 500 milliseconds interval)
 Build info: version: '4.18.1', revision: 'b1d3319b48'
 System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.10'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 146.0.7680.165, chrome: {chromedriverVersion: 146.0.7680.165 (4b989da09e1..., userDataDir: C:\Users\kenne\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56249}, goog:processID: 8224, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:56249/devtoo..., se:cdpVersion: 146.0.7680.165, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 79e31375094f3a0318b2fcd769066204
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 146.0.7680.165, chrome: {chromedriverVersion: 146.0.7680.165 (4b989da09e1..., userDataDir: C:\Users\kenne\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50533}, goog:processID: 1128, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50533/devtoo..., se:cdpVersion: 146.0.7680.165, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 14fca0e2635a3798a4ab7589c24e9bdf
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:228)
-	at com.opencart.pages.BasePage.click(BasePage.java:26)
-	at com.opencart.pages.CheckoutPage.seleccionarGuestCheckout(CheckoutPage.java:43)
-	at com.opencart.steps.OpenCartSteps.selecciona(OpenCartSteps.java:70)
+	at com.opencart.pages.BasePage.waitForElement(BasePage.java:22)
+	at com.opencart.pages.CheckoutPage.seleccionarGuestCheckout(CheckoutPage.java:46)
+	at com.opencart.steps.OpenCartSteps.selecciona(OpenCartSteps.java:92)
 	at ✽.selecciona "Guest Checkout"(file:///C:/Users/kenne/IdeaProjects/opencart-selenium-tests/src/test/resources/features/opencart.feature:18)
 </textarea>
 		</li>
@@ -360,20 +360,20 @@ Session ID: 79e31375094f3a0318b2fcd769066204
 								</thead>
 								<tbody>
 									<tr>
-										<td>abr 1, 2026 05:29:32 p. m.</td>
+										<td>abr 1, 2026 08:31:47 p. m.</td>
 										<td class='linked' test-id='12'>And selecciona "Guest Checkout"</td>
 										<td>
-											<textarea disabled class="code-block">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for element to be clickable: By.id: input-account-guest (tried for 15 second(s) with 500 milliseconds interval)
+											<textarea disabled class="code-block">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element located by By.id: account (tried for 15 second(s) with 500 milliseconds interval)
 Build info: version: '4.18.1', revision: 'b1d3319b48'
 System info: os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.10'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 146.0.7680.165, chrome: {chromedriverVersion: 146.0.7680.165 (4b989da09e1..., userDataDir: C:\Users\kenne\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56249}, goog:processID: 8224, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:56249/devtoo..., se:cdpVersion: 146.0.7680.165, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 79e31375094f3a0318b2fcd769066204
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 146.0.7680.165, chrome: {chromedriverVersion: 146.0.7680.165 (4b989da09e1..., userDataDir: C:\Users\kenne\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50533}, goog:processID: 1128, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50533/devtoo..., se:cdpVersion: 146.0.7680.165, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 14fca0e2635a3798a4ab7589c24e9bdf
 	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:84)
 	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:228)
-	at com.opencart.pages.BasePage.click(BasePage.java:26)
-	at com.opencart.pages.CheckoutPage.seleccionarGuestCheckout(CheckoutPage.java:43)
-	at com.opencart.steps.OpenCartSteps.selecciona(OpenCartSteps.java:70)
+	at com.opencart.pages.BasePage.waitForElement(BasePage.java:22)
+	at com.opencart.pages.CheckoutPage.seleccionarGuestCheckout(CheckoutPage.java:46)
+	at com.opencart.steps.OpenCartSteps.selecciona(OpenCartSteps.java:92)
 	at ✽.selecciona "Guest Checkout"(file:///C:/Users/kenne/IdeaProjects/opencart-selenium-tests/src/test/resources/features/opencart.feature:18)
 </textarea>
 										</td>
@@ -418,19 +418,19 @@ Session ID: 79e31375094f3a0318b2fcd769066204
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Start
-					<div class='panel-lead'>abr 1, 2026 05:28:39 p. m.</div>
+					<div class='panel-lead'>abr 1, 2026 08:31:00 p. m.</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 			 		End
-			 		<div class='panel-lead'>abr 1, 2026 05:30:01 p. m.</div>
+			 		<div class='panel-lead'>abr 1, 2026 08:32:05 p. m.</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Time Taken
-					<div class='panel-lead'>00 01 22.461</div>
+					<div class='panel-lead'>00 01 04.981</div>
 				</div>
 			</div>
 		</div>
@@ -469,7 +469,7 @@ Session ID: 79e31375094f3a0318b2fcd769066204
 		
 		<script>
 			var timeline = {
-			        "Compra en OpenCart":79.413
+			        "Compra en OpenCart":64.227
 			};
 		</script>
 		

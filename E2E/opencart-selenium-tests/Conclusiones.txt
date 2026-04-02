@@ -1,0 +1,6 @@
+ El mayor desafío del ejercicio fue la sincronización entre acciones.
+  OpenCart usa carga asíncrona en varias partes del flujo (región,
+  carrito, formulario de billing) y Selenium necesita explicit waits
+  precisos para cada una. Los Thread.sleep son frágiles y se deben
+  evitar siempre a favor de ExpectedConditions. Además de ejecuciones bloqueantes al momento de seguir con un flujo completo, es decir, con ventanas emergentes.
+

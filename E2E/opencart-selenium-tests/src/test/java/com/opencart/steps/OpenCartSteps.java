@@ -5,29 +5,37 @@ import com.opencart.utils.DriverFactory;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.Map;
 
 public class OpenCartSteps {
 
-    private WebDriver driver;
-    private HomePage homePage;
-    private ProductPage productPage;
-    private CartPage cartPage;
-    private CheckoutPage checkoutPage;
+    private final WebDriver driver;
+    private final WebDriverWait wait;
+    private final HomePage homePage;
+    private final ProductPage productPage;
+    private final CartPage cartPage;
+    private final CheckoutPage checkoutPage;
+
+    private static final String BASE_URL = "http://opencart.abstracta.us/";
 
     public OpenCartSteps() {
-        this.driver      = DriverFactory.getDriver();
-        this.homePage    = new HomePage(driver);
-        this.productPage = new ProductPage(driver);
-        this.cartPage    = new CartPage(driver);
+        this.driver       = DriverFactory.getDriver();
+        this.wait         = new WebDriverWait(driver, Duration.ofSeconds(15));
+        this.homePage     = new HomePage(driver);
+        this.productPage  = new ProductPage(driver);
+        this.cartPage     = new CartPage(driver);
         this.checkoutPage = new CheckoutPage(driver);
     }
 
     @Given("el usuario está en la página principal de OpenCart")
     public void el_usuario_está_en_la_página_principal() {
-        // El Hooks.java ya navega a la URL base antes de cada escenario
+        wait.until(ExpectedConditions.titleContains("Your Store"));
         Assert.assertTrue(driver.getTitle().contains("Your Store"));
     }
 
@@ -40,18 +48,32 @@ public class OpenCartSteps {
     public void agrega_el_producto_al_carrito() {
         productPage.clickPrimerProducto();
         productPage.agregarAlCarrito();
-        // Volver a la página principal para buscar el siguiente producto
-        driver.navigate().back();
-        driver.navigate().back();
+
+        // Esperar confirmación visual de que el producto fue agregado
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector(".alert-success")));
+
+        // Navegar al inicio de forma directa y determinista
+        driver.get(BASE_URL);
+        wait.until(ExpectedConditions.titleContains("Your Store"));
     }
 
     @Then("el carrito debe mostrar {int} productos")
     public void el_carrito_debe_mostrar_productos(Integer cantidad) {
-        // El número en el ícono del carrito
-        String textoCarrito = DriverFactory.getDriver()
-                .findElement(org.openqa.selenium.By.cssSelector("#cart button"))
-                .getText();
-        Assert.assertTrue(textoCarrito.contains(String.valueOf(cantidad)));
+        // Esperar que el contador del carrito refleje la cantidad correcta
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                By.cssSelector("#cart-total"),
+                cantidad + " item"));
+
+        String textoCarrito = driver
+                .findElement(By.cssSelector("#cart-total"))
+                .getText(); // Ej: "2 item(s) - $1,698.00"
+
+        Assert.assertTrue(
+                "Carrito muestra: '" + textoCarrito
+                        + "' pero se esperaban " + cantidad + " productos",
+                textoCarrito.startsWith(String.valueOf(cantidad))
+        );
     }
 
     @When("el usuario accede al carrito")
@@ -96,7 +118,8 @@ public class OpenCartSteps {
     public void debe_ver_el_mensaje(String mensajeEsperado) {
         String mensajeReal = checkoutPage.obtenerMensajeConfirmacion();
         Assert.assertTrue(
-                "Se esperaba: " + mensajeEsperado + " pero se obtuvo: " + mensajeReal,
+                "Se esperaba: '" + mensajeEsperado
+                        + "' pero se obtuvo: '" + mensajeReal + "'",
                 mensajeReal.contains(mensajeEsperado)
         );
     }
