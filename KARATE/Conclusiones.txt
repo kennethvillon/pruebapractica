@@ -1,0 +1,10 @@
+Ejercicio: ReqRes (Gestión de Usuarios)
+
+Depuración del Error 403: Identificamos que el error 403 Forbidden ocurría por enviar un x-api-key inválido. 
+Se automatizó de flujos GET, PUT y DELETE. Durante las pruebas se identificó un bloqueo persistente de red.
+
+Ejercicio: PetStore (Ciclo de Vida de Mascota)
+
+Se Validó que, al ser una API real, tras un DELETE el sistema efectivamente devuelve un 404 Not Found, confirmando el flujo completo de limpieza de datos.
+Se implementó con éxito la captura de variables del POST para encadenar las siguientes peticiones, eliminando la dependencia de datos estáticos.
+
