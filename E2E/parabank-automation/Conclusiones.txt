@@ -1,1 +1,0 @@
-Con respecto a las pruebas no se ejecuto correctamente El archivo no tiene BOM hablando de los .features — está guardado como UTF-8. se consultó en portales de IA pero no se obtuvo respusta favorable si se tiene los scripts por lo que se pudo a tener en consideración puede que esten corruptos  en el error

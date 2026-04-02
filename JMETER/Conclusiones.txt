@@ -1,1 +1,0 @@
-Con respecto al ejercicio 1 el script está técnicamente correcto porque el Throughput llegó a la meta, pero el servidor de pruebas no tiene la capacidad de procesar ese volumen de peticiones simultáneas, lo cual es el hallazgo principal de esta prueba de rendimiento
