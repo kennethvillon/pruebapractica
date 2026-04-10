@@ -1,4 +1,3 @@
-# language: es
 Feature: Login en ParaBank
 Como usuario registrado
 Quiero iniciar sesion en el portal
