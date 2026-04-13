@@ -1,15 +1,16 @@
-Feature: Login en ParaBank
-Como usuario registrado
-Quiero iniciar sesion en el portal
-Para acceder a mis cuentas bancarias
+@login
+Feature: Login en el sistema
 
-Scenario Outline: Login con credenciales "<tipo>"
-Given el usuario esta en la pagina principal de ParaBank
-When ingresa el usuario "<username>" y contrasena "<password>"
-And hace clic en Log In
-Then el resultado del login deberia ser "<resultado>"
 
-Examples:
-| tipo    | username | password | resultado |
-| valido  | john     | demo     | exitoso   |
-| invalido| wrong    | wrong    | fallido   |
+  Scenario: Login exitoso con credenciales validas
+    Given que el usuario navega a la pagina de login
+    When el usuario ingresa el usuario "john" y contrasena "demo"
+    And el usuario hace clic en Ingresar
+    Then el siste@login_exitosoma muestra la vista de resumen de cuentas
+
+  @login_fallido
+  Scenario: Login fallido con credenciales incorrectas
+    Given que el usuario navega a la pagina de login
+    When el usuario ingresa el usuario "invalido" y contrasena "incorrecta"
+    And el usuario hace clic en Ingresar
+    Then el sistema muestra un mensaje de error de credenciales

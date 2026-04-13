@@ -1,0 +1,197 @@
+# 📋 Conclusiones y Hallazgos — ParaBank Automation
+### Evaluación Práctica QA 2026
+
+---
+
+## 1. DECISIONES DE DISEÑO
+
+### 1.1 Framework seleccionado: Selenium + Cucumber + JUnit 5
+
+Se eligió esta combinación por su amplia adopción en la industria y por
+permitir escribir escenarios en lenguaje Gherkin, separando la especificación
+del comportamiento esperado de la implementación técnica. JUnit Platform
+actúa como motor de ejecución, mientras Cucumber gestiona el ciclo de vida
+de los escenarios BDD.
+
+### 1.2 Patrón de diseño: Page Object Model (POM)
+
+Se implementó POM como patrón central del framework. Cada página de la
+aplicación tiene su clase Java correspondiente que encapsula locators y
+acciones, separando completamente la lógica de interacción con la UI de
+la lógica de los casos de prueba definidos en Gherkin.
+
+Esto garantiza que un cambio en el DOM de la aplicación solo requiera
+modificar el Page Object correspondiente, sin impactar los step definitions
+ni los archivos `.feature`.
+
+### 1.3 Clase BasePage como base común
+
+Se implementó `BasePage.java` como clase padre de todos los Page Objects.
+Esta clase centraliza los métodos de interacción más comunes (clicks,
+escritura, esperas explícitas), aplicando el principio OCP: los Page Objects
+se extienden sin necesidad de modificar la base.
+
+### 1.4 DriverManager con patrón Singleton y ThreadLocal
+
+La gestión del WebDriver se centralizó en `DriverManager.java`, utilizando
+un `ThreadLocal<WebDriver>` para aislar la instancia del driver por hilo de
+ejecución. Esto garantiza que el framework pueda escalar a ejecución en
+paralelo sin condiciones de carrera entre escenarios.
+
+### 1.5 Configuración externalizada en ConfigManager
+
+Los tiempos de espera (implicit wait, page load timeout, script timeout)
+se centralizaron en `ConfigManager.java`, evitando valores hardcodeados
+dispersos en el código y facilitando ajustes según el entorno de ejecución.
+
+### 1.6 Estrategia de capturas con scenario.attach()
+
+Para embeber las capturas de pantalla directamente en el `cucumber.json`,
+se utilizó `scenario.attach()` en lugar de soluciones externas. Esto permite
+que los tres reportes configurados (Cucumber nativo, Masterthought y Cluecumber)
+visualicen las imágenes sin configuración adicional en cada herramienta.
+
+---
+
+## 2. HALLAZGOS DURANTE LA IMPLEMENTACIÓN
+
+### 2.1 Inestabilidad del servidor ParaBank
+
+El mayor desafío fue la naturaleza del entorno de demostración público
+`parabank.parasoft.com`. Durante las ejecuciones se observaron:
+
+- Tiempos de respuesta variables para la misma operación
+- Fallos en el mensaje de confirmación de registro por carga tardía del DOM
+- Ausencia de una segunda cuenta al ejecutar el escenario de transferencia,
+  dado que ParaBank solo crea una cuenta al momento del registro
+
+Solución implementada: uso de `WebDriverWait` con `ExpectedConditions`
+para esperar visibilidad de elementos antes de realizar assertions, en lugar
+de depender únicamente de las esperas implícitas globales.
+
+### 2.2 Ubicación incorrecta de Hooks.java
+
+Inicialmente `Hooks.java` se ubicó en `src/main/java`, lo que impedía que
+la dependencia `cucumber-junit-platform-engine` (declarada con `scope=test`)
+fuera visible. El error se manifestaba como símbolo no encontrado al importar
+clases de Cucumber. La solución fue mover el archivo a `src/test/java`,
+que es la ubicación correcta para todo el código de pruebas en Maven.
+
+### 2.3 Firma incorrecta de Allure.addAttachment()
+
+Durante la integración inicial con Allure se intentó usar
+`Allure.addAttachment(nombre, mediaType, byte[], extensión)`, pero ese
+overload no existe. El método correcto requiere un `InputStream`. Se
+resolvió envolviendo el `byte[]` en un `ByteArrayInputStream`. Finalmente
+se optó por `scenario.attach()` al ser la solución más directa y compatible
+con todos los reportes configurados.
+
+### 2.4 Plugin Cluecumber con artefacto incorrecto
+
+Al configurar Cluecumber en el `pom.xml` se usó inicialmente el artefacto
+`cluecumber-engine` (versión 3.9.0), que es una librería interna sin el
+descriptor `META-INF/maven/plugin.xml` que Maven requiere para reconocer
+un plugin. El artefacto correcto es `cluecumber-report-plugin` (versión 2.9.4).
+
+### 2.5 Generación de reportes bloqueada por fallos de prueba
+
+Maven detiene la fase `verify` si la fase `test` reporta fallos, impidiendo
+que los plugins de reportes se ejecuten. Se resolvió agregando
+`<testFailureIgnore>true</testFailureIgnore>` en la configuración de
+`maven-surefire-plugin`, permitiendo que los reportes se generen siempre,
+mostrando escenarios fallidos en rojo como evidencia de los defectos encontrados.
+
+### 2.6 Warning de versión CDP
+
+Selenium 4.21.0 soporta CDP hasta la versión v133, mientras que Chrome 146
+es más reciente. Esto genera un warning en consola pero no interrumpe la
+ejecución. Se resolvió declarando explícitamente la dependencia
+`selenium-devtools-v133` para suprimir el mensaje.
+
+---
+
+## 3. RESULTADOS DE LAS PRUEBAS
+
+### Suite ParaBank — 4 features, 6 escenarios
+
+| Feature             | Escenario                                        |
+|---------------------|--------------------------------------------------|
+| `registro.feature`  | Registro exitoso con datos válidos               |
+| `registro.feature`  | Registro con usuario ya existente (duplicado)    |
+| `login.feature`     | Login con credenciales válidas                   |
+| `login.feature`     | Login con credenciales inválidas                 |
+| `transferencia.feature` | Transferencia exitosa entre dos cuentas      |
+| `retiro.feature`    | Retiro mediante pago de factura (Bill Pay)       |
+
+Los reportes generados incluyen evidencia fotográfica (capturas de pantalla)
+de cada paso ejecutado, disponibles en:
+
+- `target/cucumber-native.html`
+- `target/cucumber-html-reports/index.html`
+
+---
+
+## 4. BUENAS PRÁCTICAS APLICADAS
+
+### Principios SOLID
+
+**SRP — Single Responsibility Principle**
+Cada clase tiene una única responsabilidad: `DriverManager` gestiona el
+ciclo de vida del WebDriver, `ConfigManager` centraliza la configuración,
+cada Page Object encapsula una sola página, y cada clase de Steps define
+únicamente los pasos de su módulo correspondiente.
+
+**OCP — Open/Closed Principle**
+`BasePage` está abierta para extensión (todos los Page Objects la extienden)
+pero cerrada para modificación. Agregar una nueva página no requiere cambios
+en la clase base.
+
+**LSP — Liskov Substitution Principle**
+Todos los Page Objects son sustituibles por su tipo base (`BasePage`), ya
+que respetan el contrato definido por ella sin alterar su comportamiento.
+
+**ISP — Interface Segregation Principle**
+Cada Page Object expone únicamente los métodos relevantes a su página,
+sin métodos de otras pantallas que obliguen a dependencias innecesarias.
+
+**DIP — Dependency Inversion Principle**
+Los Step Definitions dependen de los Page Objects (abstracciones de alto nivel)
+y no del WebDriver directamente. El driver se inyecta a través de
+`DriverManager.getDriver()`, desacoplando los steps de la implementación concreta.
+
+### Otras prácticas aplicadas
+
+- Locators centralizados como atributos privados en cada Page Object
+- Sin lógica de negocio en los Page Objects (solo navegación e interacción)
+- Esperas explícitas con `WebDriverWait` para elementos dinámicos
+- Hooks separados por responsabilidad: `@Before` inicializa, `@AfterStep`
+  captura, `@After` cierra y registra el estado final
+- Reportes múltiples para cubrir distintas audiencias: técnica y de gestión
+
+---
+
+## 5. MEJORAS IDENTIFICADAS PARA PRÓXIMAS ITERACIONES
+
+- **Datos de prueba dinámicos:** Generar el nombre de usuario con timestamp
+  para evitar conflictos en ejecuciones consecutivas contra el servidor público.
+
+- **Modo headless:** Habilitar `--headless` en `ChromeOptions` para ejecución
+  en pipelines de CI/CD sin interfaz gráfica.
+
+- **Tags de Cucumber:** Agregar anotaciones `@smoke` y `@regression` a los
+  escenarios para habilitar ejecución selectiva por tipo de suite.
+
+- **Integración CI/CD:** Configurar un pipeline en GitHub Actions o Jenkins
+  que ejecute `mvn verify` automáticamente ante cada push al repositorio.
+
+- **Scenario Outline:** Reemplazar escenarios con datos fijos por `Scenario
+  Outline` + `Examples` para ampliar la cobertura con múltiples conjuntos
+  de datos de entrada sin duplicar código Gherkin.
+
+- **Segunda cuenta en transferencia:** Implementar un paso previo que abra
+  una segunda cuenta bancaria antes de ejecutar el escenario de transferencia,
+  garantizando la independencia del test respecto al estado inicial del entorno.
+
+- **Gestión de test data:** Implementar un mecanismo de setup y teardown de
+  datos que garantice el estado inicial esperado antes de cada escenario,
+  desacoplando las pruebas del estado residual de ejecuciones anteriores.
